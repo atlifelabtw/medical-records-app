@@ -1,5 +1,5 @@
-import{createClient}from'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-const sb=createClient('https://ethrejmgwrizrsxqwjhz.supabase.co','sb_publishable__Hgq_ISX-QkhPb2oGSJoCQ_GBjCbOOk');const $=s=>document.querySelector(s);let profile=null,selected=null,editing=null;
+import{sb}from'./supabase.js';
+const $=s=>document.querySelector(s);let profile=null,selected=null,editing=null;
 const msg=x=>alert(x.message||x);async function boot(){const{data:{session}}=await sb.auth.getSession();if(!session)return showAuth();const{data,error}=await sb.from('profiles').select('*').eq('id',session.user.id).single();if(error)return msg(error);profile=data;if(!profile.active||profile.role==='pending'){await sb.auth.signOut();showAuth();return msg('帳號尚未獲最高管理者核准')}$('#auth').hidden=true;$('#app').hidden=false;$('#account').textContent=`${profile.email} · ${profile.role==='super_admin'?'最高管理者':'子管理者'}`;$('#users').hidden=profile.role!=='super_admin';loadPatients()}
 function showAuth(){$('#auth').hidden=false;$('#app').hidden=true}
 $('#authForm').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),{error}=await sb.auth.signInWithPassword({email:f.get('email'),password:f.get('password')});if(error)return $('#authMsg').textContent=error.message;boot()};
