@@ -1,0 +1,2 @@
+@import url('./v5-style.css');
+.chosenBodies{display:grid;gap:10px;margin-top:12px}.chosenBodyCard{padding:13px;border:1px solid var(--line);border-radius:12px;background:white}.chosenBodyCard>div{display:flex;align-items:center;justify-content:space-between;gap:10px}.chosenBodyCard textarea{min-height:72px}.savedBodies{margin:8px 0}.savedBody{margin:8px 0;padding:10px 12px;border-left:4px solid var(--green);border-radius:7px;background:#f5faf8}.savedBody p{white-space:pre-wrap}.recordBody>p:last-of-type{white-space:pre-wrap}
