@@ -1,0 +1,21 @@
+@import url('./v9-style.css');
+
+.optionBlock>summary{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.manageFavoritesButton{width:auto;min-height:36px;padding:6px 12px;margin-left:auto;font-size:14px;white-space:nowrap}
+.emptyFavorites{margin:10px 0;color:#667a74}
+.favoriteManagerList{display:grid;gap:10px}
+.favoriteManageRow{display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.favoriteManageRow[draggable="true"]{cursor:grab}
+.favoriteManageRow.dragging{opacity:.45}
+.favoriteManageRow.dragOver{border-color:var(--green);box-shadow:0 0 0 2px #1c675333}
+.favoriteManageRow label{display:flex;align-items:center;gap:8px;flex:1;margin:0}
+.favoriteManageRow input{width:20px;height:20px}
+.dragHandle{display:grid;place-items:center;min-width:32px;min-height:32px;color:#667a74;font-size:20px;touch-action:none}
+.favoriteMoveButtons{display:flex;gap:6px}
+.favoriteMoveButtons button{width:44px;min-width:44px;height:44px;padding:0}
+
+@media(max-width:599px){
+ .manageFavoritesButton{min-height:40px}
+ .favoriteManageRow{padding:8px 6px}
+ .favoriteManageRow label{font-size:16px}
+}
