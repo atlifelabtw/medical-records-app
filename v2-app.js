@@ -1,4 +1,4 @@
-import{sb}from'./supabase.js';const $=s=>document.querySelector(s);let profile,categories=[],patients=[],bodyOptions=[],bodyDetails=[],treatmentOptions=[],active='all';
+import{sb}from'./supabase.js?v=8';const $=s=>document.querySelector(s);let profile,categories=[],patients=[],bodyOptions=[],bodyDetails=[],treatmentOptions=[],active='all';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const can=p=>profile?.role==='super_admin'||profile?.permissions?.[p]===true||(p.endsWith('_treatment')&&profile?.permissions?.manage_treatments===true);
 const audit=(action,type=null,id=null,description=null)=>sb.rpc('write_audit',{p_action:action,p_entity_type:type,p_entity_id:id,p_description:description});
