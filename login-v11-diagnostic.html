@@ -5,4 +5,4 @@
 <section class="content"><div class="toolbar"><label class="search">⌕ <input id="globalSearch" placeholder="搜尋姓名、分類、日期或紀錄關鍵字"></label><select id="sort"><option value="updated">最近更新</option><option value="name">姓名</option><option value="created">建立日期</option><option value="count">紀錄數量</option></select><button class="primary" id="addPatient">＋ 新增個案</button></div><div id="breadcrumbs"></div><div id="workspace"></div></section></main></div>
 <dialog id="modal"><form id="modalForm"><h2 id="modalTitle"></h2><div id="modalFields"></div><div class="actions"><button type="button" id="cancel">取消</button><button class="primary" id="submitButton">儲存</button></div></form></dialog>
 <script>window.addEventListener('error',e=>document.getElementById('diagnostic').textContent='程式載入錯誤：'+(e.message||e.error));window.addEventListener('unhandledrejection',e=>document.getElementById('diagnostic').textContent='程式執行錯誤：'+(e.reason?.message||e.reason));</script>
-<script type="module" src="v2-app.js?v=11-diagnostic"></script></body></html>
+<script src="supabase.js?v=12"></script><script src="v2-app.js?v=12"></script></body></html>
