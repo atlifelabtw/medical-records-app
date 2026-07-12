@@ -1,0 +1,42 @@
+@import url('./v10-style.css');
+
+.modalHeader{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.modalHeader h2{min-width:0}
+#modalClose{display:grid;place-items:center;width:44px;min-width:44px;height:44px;padding:0;font-size:24px;line-height:1}
+
+@media(min-width:600px) and (max-width:1024px){
+ #modal{width:min(90vw,860px)}
+ .recordModal .bodyPartOptions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+ .recordModal .bodyPartButton{width:100%;min-height:48px;white-space:nowrap;word-break:keep-all}
+}
+
+@media(max-width:599px){
+ #modal.recordModal{position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;max-height:100dvh;margin:0;padding:0;border:0;border-radius:0;overflow:hidden}
+ #modal.recordModal::backdrop{background:#22302d88}
+ .recordModal #modalForm{display:grid;grid-template-rows:auto minmax(0,1fr) auto;width:100%;height:100%;max-width:none;margin:0;padding:0;padding-top:env(safe-area-inset-top);overflow:hidden;background:#fff}
+ .recordModal .modalHeader{position:relative;z-index:3;min-height:56px;padding:6px 12px 6px 16px;border-bottom:1px solid var(--line);background:#fff}
+ .recordModal .modalHeader h2{font-size:20px}
+ .recordModal #modalFields{width:100%;min-width:0;padding:16px;padding-bottom:32px;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ .recordModal .actions{position:relative;z-index:3;display:grid;grid-template-columns:.8fr 1.2fr;gap:10px;width:100%;margin:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff;box-shadow:0 -6px 18px #22302d12}
+ .recordModal .actions button{width:100%;min-height:52px;padding:10px 14px;font-size:18px}
+ .recordModal .picker{width:100%;margin:16px 0;padding:0;border:0;background:transparent}
+ .recordModal .picker>h3{margin:20px 0 10px;font-size:20px;font-weight:750}
+ .recordModal .optionGroup{margin:0 0 22px}
+ .recordModal .optionGroup>b{display:block;margin-bottom:10px;font-size:20px;font-weight:750;color:#425650}
+ .recordModal .bodyPartOptions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;margin:0}
+ .recordModal .bodyPartButton{width:100%;min-width:0;min-height:52px;padding:10px 6px;font-size:18px;font-weight:700;text-align:center;white-space:nowrap;word-break:keep-all;overflow-wrap:normal}
+ .recordModal #sideButtons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .recordModal #sideButtons .choice{width:100%;min-height:50px;font-size:17px;white-space:nowrap;word-break:keep-all}
+ .recordModal #addBodyChoice{width:100%;min-height:52px;margin:4px 0 16px;padding:12px 20px;font-size:18px;font-weight:750}
+ .recordModal .field{font-size:17px}
+ .recordModal input,.recordModal select,.recordModal textarea{font-size:16px}
+ .recordModal .recordNotesField{display:block;width:100%;margin-top:20px}
+ .recordModal .recordNotesField textarea{width:100%;min-height:110px;padding:12px;line-height:1.5;box-sizing:border-box}
+ .recordModal .chosenBodies{width:100%}
+}
+
+@media(max-width:350px){
+ .recordModal .bodyPartOptions{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .recordModal #modalFields{padding-right:12px;padding-left:12px}
+ .recordModal .actions{padding-right:12px;padding-left:12px}
+}
