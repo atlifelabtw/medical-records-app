@@ -9,6 +9,9 @@
 .statsRow span,.statsRow small{display:block;min-width:0}
 .statsRow small{margin-top:3px;color:#647770}
 .statsRow strong{flex:0 0 auto;color:var(--green);font-size:18px}
+.recordFile summary small{margin-left:8px;color:#71827d;font-weight:600}
+.recordFile .recordBody h3{margin-bottom:10px;color:var(--green);font-size:15px}
+.recordFile .recordBody+.recordBody{border-top:1px dashed #b8c9c3}
 
 @media(max-width:599px){
  .statsBreakdown{max-height:none}
