@@ -47,10 +47,14 @@
 @media(max-width:599px){
  #modal.statsModal{position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;max-height:100dvh;margin:0;padding:0;border-radius:0;overflow:hidden}
  .statsModal #modalForm{display:grid;grid-template-rows:auto minmax(0,1fr) auto;width:100%;height:100%;padding:env(safe-area-inset-top) 0 0;overflow:hidden;background:#f7f9f8}
- .statsModal .modalBack{position:absolute;top:calc(6px + env(safe-area-inset-top));left:12px;z-index:3;margin:0}
+ .statsModal .modalBack{position:static;grid-row:1;align-self:center;justify-self:start;z-index:3;min-height:44px;margin:4px 12px 0;padding:8px 4px}
  .statsModal .modalHeader{grid-row:1;padding:6px 12px 8px 16px;background:#fff}
  .statsModal #modalFields{grid-row:2;padding:12px 12px 24px;overflow-y:auto;-webkit-overflow-scrolling:touch}
  .statsModal .actions{grid-row:3;display:grid;grid-template-columns:.8fr 1.2fr;gap:9px;margin:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff}
+ .statsModal.statsHasBack #modalForm{grid-template-rows:auto auto minmax(0,1fr) auto}
+ .statsModal.statsHasBack .modalHeader{grid-row:2}
+ .statsModal.statsHasBack #modalFields{grid-row:3}
+ .statsModal.statsHasBack .actions{grid-row:4}
  .statsModal .actions button{min-height:50px;font-size:17px}
  .statsFilters{padding:12px}
  .statsPresetRow{display:grid;grid-template-columns:1fr 1fr}
