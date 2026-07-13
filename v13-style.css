@@ -1,0 +1,68 @@
+@import url('./v12-style.css');
+
+.statsModal{width:min(96vw,1180px);max-height:94dvh}
+.statsModal #modalForm{padding:22px}
+.statsModal #modalFields{min-width:0}
+.statsFilters{padding:16px;border:1px solid var(--line);border-radius:14px;background:#f8fbfa}
+.statsPresetRow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:13px}
+.statsPresetRow button{min-height:40px;background:#e7f0ed;color:#315c52}
+.statsFilterGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.statsFilterGrid .statsKeyword{grid-column:span 3}
+.statsKpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
+.statsKpis article{display:flex;flex-direction:column;min-width:0;padding:16px;border:1px solid var(--line);border-radius:13px;background:#fff}
+.statsKpis small{color:#647770;font-weight:700}
+.statsKpis strong{margin-top:6px;color:var(--green);font-size:30px;line-height:1}
+.statsKpis span{margin-top:7px;overflow:hidden;text-overflow:ellipsis;color:#71827d;font-size:12px;white-space:nowrap}
+.statsPanel{min-width:0;margin-top:12px;padding:16px;border:1px solid var(--line);border-radius:13px;background:#fff}
+.statsPanelHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.statsPanelHead h3{font-size:18px}
+.statsPanelHead small{color:#71827d}
+.statsPanelHead button{min-height:40px;color:#155d50;background:#e4f1ed}
+.statsCharts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.statsBars{display:grid;gap:10px}
+.statsBarRow>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px;font-size:14px}
+.statsBarRow span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.statsBarRow b{flex:0 0 auto;color:#365b52;font-size:13px}
+.statsBarTrack{height:9px;overflow:hidden;border-radius:999px;background:#e8efed}
+.statsBarTrack i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#267364,#76ac9e)}
+.statsTrendBars{display:flex;align-items:end;gap:7px;height:190px;padding-top:25px;overflow-x:auto}
+.statsTrendBars>div{position:relative;display:grid;grid-template-rows:1fr auto;align-items:end;flex:1 0 38px;min-width:38px;height:100%;text-align:center}
+.statsTrendBars i{display:block;width:min(28px,75%);min-height:6px;margin:0 auto;border-radius:7px 7px 2px 2px;background:linear-gradient(#62a795,#267364)}
+.statsTrendBars b{position:absolute;top:-21px;left:0;width:100%;color:#365b52;font-size:12px}
+.statsTrendBars span{margin-top:6px;color:#71827d;font-size:11px;white-space:nowrap}
+.statsTableWrap{max-height:340px;overflow:auto;border:1px solid var(--line);border-radius:10px}
+.statsTable{width:100%;border-collapse:collapse;font-size:14px}
+.statsTable th,.statsTable td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}
+.statsTable th{position:sticky;top:0;z-index:1;background:#edf5f2;color:#365b52}
+.statsTable td:last-child,.statsTable th:last-child{text-align:right}
+.statsTable tbody tr:last-child td{border-bottom:0}
+.statsEmpty{margin-top:16px}
+
+@media(min-width:600px) and (max-width:900px){
+ .statsFilterGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .statsFilterGrid .statsKeyword{grid-column:span 1}
+ .statsKpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:599px){
+ #modal.statsModal{position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;max-height:100dvh;margin:0;padding:0;border-radius:0;overflow:hidden}
+ .statsModal #modalForm{display:grid;grid-template-rows:auto minmax(0,1fr) auto;width:100%;height:100%;padding:env(safe-area-inset-top) 0 0;overflow:hidden;background:#f7f9f8}
+ .statsModal .modalBack{position:absolute;top:calc(6px + env(safe-area-inset-top));left:12px;z-index:3;margin:0}
+ .statsModal .modalHeader{grid-row:1;padding:6px 12px 8px 16px;background:#fff}
+ .statsModal #modalFields{grid-row:2;padding:12px 12px 24px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+ .statsModal .actions{grid-row:3;display:grid;grid-template-columns:.8fr 1.2fr;gap:9px;margin:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff}
+ .statsModal .actions button{min-height:50px;font-size:17px}
+ .statsFilters{padding:12px}
+ .statsPresetRow{display:grid;grid-template-columns:1fr 1fr}
+ .statsFilterGrid{grid-template-columns:1fr 1fr}
+ .statsFilterGrid .statsKeyword{grid-column:1/-1}
+ .statsFilterGrid .field{font-size:14px}
+ .statsFilterGrid input,.statsFilterGrid select{font-size:16px}
+ .statsKpis{grid-template-columns:1fr 1fr}
+ .statsKpis article{padding:13px}
+ .statsKpis strong{font-size:26px}
+ .statsCharts{grid-template-columns:1fr}
+ .statsTrendBars{height:170px}
+ .statsPanel{padding:13px}
+ .statsTable{min-width:540px}
+}
