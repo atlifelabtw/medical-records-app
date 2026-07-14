@@ -42,3 +42,29 @@ test('download keeps a visible fallback link when automatic download is blocked'
   assert.equal(events[1][1],'afterend');
   assert.ok(events[4][1]>=300000,'fallback link must remain usable long enough for mobile browsers');
 });
+
+test('download falls back to a data URL when createObjectURL is unavailable',()=>{
+  const match=source.match(/let activeExportUrl=.*?;const csv=/s);
+  assert.ok(match);
+  let fallbackLink;
+  const actions={insertAdjacentElement(){}};
+  const makeElement=tag=>({
+    tag,children:[],className:'',id:'',
+    setAttribute(){},replaceChildren(){this.children=[]},
+    append(...children){this.children.push(...children);fallbackLink=children.find(x=>x.tag==='a')||fallbackLink},
+    scrollIntoView(){},click(){},removeAttribute(name){delete this[name]}
+  });
+  const context={
+    Blob:class{},
+    URL:{},
+    document:{body:{querySelector(){return actions},insertBefore(){}},createElement:makeElement},
+    $(){return null},
+    setTimeout(){throw new Error('data URL fallback must not schedule object URL cleanup')},
+    alert(message){throw new Error(message)}
+  };
+  vm.runInNewContext(`${match[0].slice(0,-';const csv='.length)};globalThis.download=download`,context);
+  assert.equal(context.download('test.json','{"ok":true}','application/json'),true);
+  assert.equal(fallbackLink.download,'test.json');
+  assert.ok(fallbackLink.href.startsWith('data:application/json,'));
+  assert.match(decodeURIComponent(fallbackLink.href),/{"ok":true}/);
+});
