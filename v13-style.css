@@ -1,5 +1,9 @@
 @import url('./v12-style.css');
 
+.settingsMinor{display:flex;justify-content:flex-end;margin-top:30px;padding-top:14px;border-top:1px solid var(--line)}
+.settingsMinor button{min-height:44px;padding:8px 4px;background:transparent;color:#647770;text-decoration:underline;text-underline-offset:3px}
+.settingsMinor button:hover,.settingsMinor button:focus-visible{color:var(--green)}
+
 .statsModal{width:min(96vw,1180px);max-height:94dvh}
 .statsModal #modalForm{padding:22px}
 .statsModal #modalFields{min-width:0}
