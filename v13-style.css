@@ -3,6 +3,9 @@
 .settingsMinor{display:flex;justify-content:flex-end;margin-top:30px;padding-top:14px;border-top:1px solid var(--line)}
 .settingsMinor button{min-height:44px;padding:8px 4px;background:transparent;color:#647770;text-decoration:underline;text-underline-offset:3px}
 .settingsMinor button:hover,.settingsMinor button:focus-visible{color:var(--green)}
+.bodyIdentityEditor{display:grid;grid-template-columns:minmax(130px,.7fr) minmax(180px,1.3fr);grid-column:1/-1;gap:10px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#f8fbfa}
+.bodyIdentityEditor h4{grid-column:1/-1;margin:0;color:#315c52}.bodyIdentityEditor .field{margin:0}.bodyIdentityEditor select{width:100%;min-height:44px;background:#fff}
+@media(max-width:599px){.bodyIdentityEditor{grid-template-columns:1fr}.bodyIdentityEditor h4{grid-column:1}}
 
 .statsModal{width:min(96vw,1180px);max-height:94dvh}
 .statsModal #modalForm{padding:22px}
