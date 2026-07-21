@@ -48,3 +48,16 @@ test("個人版 migration 保留舊資料並限制資料存取", async () => {
   assert.match(sql, /revoke all on function public\.log_activity[\s\S]*authenticated/i);
   assert.match(sql, /perform public\.log_activity[\s\S]*record_created[\s\S]*record_updated/i);
 });
+
+test("個人版結構化病歷相容舊必填欄位與舊版資料表", async () => {
+  const sql = await readFile(
+    new URL("../supabase/migrations/202607210003_fix_legacy_record_required_fields.sql", import.meta.url),
+    "utf8",
+  );
+  assert.match(sql, /record_body_parts[\s\S]*add column if not exists notes/i);
+  assert.match(sql, /add column if not exists clinical_data jsonb/i);
+  assert.match(sql, /add column if not exists sort_order integer/i);
+  assert.match(sql, /record_body_part_treatments[\s\S]*add column if not exists sort_order/i);
+  assert.match(sql, /insert into public\.records\(patient_id,visit_date,body_part,treatment,notes,created_by,updated_by\)/i);
+  assert.match(sql, /update public\.records set visit_date=p_visit_date,body_part=legacy_body,treatment=legacy_treatment/i);
+});
