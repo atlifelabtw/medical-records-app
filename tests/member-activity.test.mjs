@@ -4,7 +4,7 @@ import test from "node:test";
 
 test("個人版包含成員識別、操作紀錄與成員統計", async () => {
   const source = await readFile(new URL("../v2-app.js", import.meta.url), "utf8");
-  assert.match(source, /const MEMBER_COLORS=\['#586A7A'/);
+  assert.match(source, /const MEMBER_COLORS=\['#3F6B8A'/);
   assert.match(source, /const memberBadge=/);
   assert.match(source, /legacy='舊資料'/);
   assert.match(source, /function renderActivityLogs/);
@@ -13,6 +13,20 @@ test("個人版包含成員識別、操作紀錄與成員統計", async () => {
   assert.match(source, /can_view_all_activity_logs/);
   assert.match(source, /can_view_team_statistics/);
   assert.match(source, /can_manage_member_colors/);
+});
+
+test("成員識別色使用差異明顯的新色盤", async () => {
+  const sql = await readFile(
+    new URL("../supabase/migrations/202607210002_distinct_member_color_palette.sql", import.meta.url),
+    "utf8",
+  );
+  for (const color of ["#3F6B8A", "#4F7A5A", "#A15C5C", "#76558C", "#3E7C78", "#A66A3F", "#5F6FA3", "#8A7A3E"]) {
+    assert.match(sql, new RegExp(color));
+  }
+  assert.match(sql, /drop constraint if exists profiles_member_color_palette_check/i);
+  assert.match(sql, /create or replace function private\.next_member_color/i);
+  assert.match(sql, /row_number\(\) over\(order by created_at,id\)/i);
+  assert.match(sql, /create or replace function public\.set_member_color/i);
 });
 
 test("個人版 migration 保留舊資料並限制資料存取", async () => {
