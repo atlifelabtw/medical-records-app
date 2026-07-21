@@ -60,6 +60,10 @@ test("個人版結構化病歷相容舊必填欄位與舊版資料表", async ()
   assert.match(sql, /record_body_part_treatments[\s\S]*add column if not exists sort_order/i);
   assert.match(sql, /insert into public\.records\(patient_id,visit_date,body_part,treatment,notes,created_by,updated_by\)/i);
   assert.match(sql, /update public\.records set visit_date=p_visit_date,body_part=legacy_body,treatment=legacy_treatment/i);
+  assert.match(sql, /create or replace function private\.log_record_activity/i);
+  assert.match(sql, /grant execute on function private\.log_record_activity[\s\S]*authenticated/i);
+  assert.match(sql, /perform private\.log_record_activity/i);
+  assert.doesNotMatch(sql, /perform public\.log_activity/);
 });
 
 test("個人版導覽單擊立即切換，不依賴第二次點擊", async () => {
