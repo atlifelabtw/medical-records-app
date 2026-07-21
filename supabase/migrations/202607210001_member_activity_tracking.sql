@@ -1,6 +1,45 @@
 -- Single-workspace member identity colors, actor attribution and activity history.
 -- Existing rows remain nullable so legacy data is never attributed to the wrong member.
 
+create schema if not exists private;
+revoke all on schema private from public, anon;
+grant usage on schema private to authenticated;
+
+create or replace function private.is_active_user() returns boolean
+language sql stable security definer set search_path='' as $$
+  select exists(
+    select 1 from public.profiles p
+    where p.id=(select auth.uid()) and coalesce(p.active,true)
+  )
+$$;
+
+create or replace function private.is_super_admin() returns boolean
+language sql stable security definer set search_path='' as $$
+  select exists(
+    select 1 from public.profiles p
+    where p.id=(select auth.uid()) and coalesce(p.active,true) and p.role='super_admin'
+  )
+$$;
+
+create or replace function private.has_permission(p_permission text) returns boolean
+language sql stable security definer set search_path='' as $$
+  select coalesce((
+    select case
+      when p.role='super_admin' then true
+      else coalesce((p.permissions->>p_permission)::boolean,false)
+    end
+    from public.profiles p
+    where p.id=(select auth.uid()) and coalesce(p.active,true)
+  ),false)
+$$;
+
+revoke all on function private.is_active_user() from public,anon;
+revoke all on function private.is_super_admin() from public,anon;
+revoke all on function private.has_permission(text) from public,anon;
+grant execute on function private.is_active_user() to authenticated;
+grant execute on function private.is_super_admin() to authenticated;
+grant execute on function private.has_permission(text) to authenticated;
+
 alter table public.profiles add column if not exists member_color text;
 alter table public.patients add column if not exists created_by uuid references public.profiles(id) on delete set null;
 alter table public.patients add column if not exists updated_by uuid references public.profiles(id) on delete set null;

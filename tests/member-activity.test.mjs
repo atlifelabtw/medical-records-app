@@ -22,6 +22,10 @@ test("個人版 migration 保留舊資料並限制資料存取", async () => {
   );
   assert.match(sql, /patients add column if not exists created_by/i);
   assert.match(sql, /records add column if not exists updated_by/i);
+  assert.match(sql, /create schema if not exists private/i);
+  assert.match(sql, /create or replace function private\.is_active_user/i);
+  assert.match(sql, /create or replace function private\.is_super_admin/i);
+  assert.match(sql, /create or replace function private\.has_permission/i);
   assert.match(sql, /create table if not exists public\.activity_logs/i);
   assert.match(sql, /create policy activity_logs_read/i);
   assert.match(sql, /actor_id=\(select auth\.uid\(\)\)/i);
