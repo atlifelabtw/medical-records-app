@@ -61,3 +61,11 @@ test("個人版結構化病歷相容舊必填欄位與舊版資料表", async ()
   assert.match(sql, /insert into public\.records\(patient_id,visit_date,body_part,treatment,notes,created_by,updated_by\)/i);
   assert.match(sql, /update public\.records set visit_date=p_visit_date,body_part=legacy_body,treatment=legacy_treatment/i);
 });
+
+test("個人版導覽單擊立即切換，不依賴第二次點擊", async () => {
+  const source = await readFile(new URL("../v2-app.js", import.meta.url), "utf8");
+  const css = await readFile(new URL("../v13-style.css", import.meta.url), "utf8");
+  assert.match(source, /function navigate\(path\)\{const hash=`#\$\{path\}`;if\(location\.hash!==hash\)history\.replaceState\(null,'',hash\);applyRoute\(\)\}/);
+  assert.doesNotMatch(source, /else location\.hash=hash/);
+  assert.match(css, /button,\[role="button"\],summary\{touch-action:manipulation\}/);
+});
