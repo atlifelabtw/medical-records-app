@@ -75,12 +75,18 @@ Deno.serve(async req=>{
       const {error}=await admin.auth.admin.updateUserById(b.user_id,{password:b.password});if(error)return reply({error:error.message},400)
       await admin.from('profiles').update({must_change_password:!!b.must_change_password,updated_at:new Date().toISOString()}).eq('id',b.user_id)
     }else if(action==='delete'){
-      const {count}=await admin.from('audit_logs').select('*',{count:'exact',head:true}).eq('user_id',b.user_id)
-      if((count||0)>0||target.last_login_at)return reply({error:'此帳號已有登入或操作紀錄，只能停用'},400)
+      const [{count:activityCount},{count:patientCount},{count:recordCount}]=await Promise.all([
+        admin.from('activity_logs').select('*',{count:'exact',head:true}).eq('actor_id',b.user_id),
+        admin.from('patients').select('*',{count:'exact',head:true}).or(`created_by.eq.${b.user_id},updated_by.eq.${b.user_id}`),
+        admin.from('records').select('*',{count:'exact',head:true}).or(`created_by.eq.${b.user_id},updated_by.eq.${b.user_id}`),
+      ])
+      if((activityCount||0)>0||(patientCount||0)>0||(recordCount||0)>0)return reply({error:'此帳號已有個案、病歷或操作紀錄；為保留建立者資訊，請改為停用帳號'},400)
+      // 舊版登入稽核不屬於工作資料，不應阻止未參與工作的帳號被刪除。
+      const {error:auditDeleteError}=await admin.from('audit_logs').delete().eq('user_id',b.user_id)
+      if(auditDeleteError)return reply({error:`清除舊登入稽核失敗：${auditDeleteError.message}`},400)
       const {error}=await admin.auth.admin.deleteUser(b.user_id);if(error)return reply({error:error.message},400)
     }else return reply({error:'不支援的操作'},400)
     await admin.from('audit_logs').insert({user_id:user.id,action:action==='update'?(b.active?'修改帳號權限':'停用帳號'):action==='reset_password'?'重設密碼':'刪除帳號',entity_type:'profile',entity_id:b.user_id,description:target.login_name||target.email})
     return reply({ok:true})
   }catch(e){return reply({error:e instanceof Error?e.message:'系統錯誤'},500)}
 })
-
