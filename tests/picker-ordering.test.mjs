@@ -20,3 +20,12 @@ test('順序更新有指定資料列並使用低調控制樣式',()=>{
   assert.match(css,/\.pickerOrderToggle\{[^}]*font-size:13px/);
   assert.match(css,/\.pickerOrderControls button\{[^}]*width:30px/);
 });
+
+test('調整一次會同步全域清單並在重新讀取後沿用',()=>{
+  assert.match(source,/masterList=list/);
+  assert.match(source,/\[masterList\[mai\],masterList\[mbi\]\]=\[masterList\[mbi\],masterList\[mai\]\]/);
+  assert.match(source,/activeTreatments,id,dir,\(\)=>true,treatmentOptions/);
+  assert.match(source,/x=>x\.category===item\.category,bodyOptions/);
+  assert.match(source,/from\('body_part_options'\)\.select\('\*'\)\.order\('sort_order'\)/);
+  assert.match(source,/from\('treatment_options'\)\.select\('\*'\)\.order\('sort_order'\)/);
+});
